@@ -1,1 +1,34 @@
-<h1> My Salon </h1>
+<div class="text-center container">
+  <h1><%= image_tag "50:50.png" %></h1>
+  <div class="py-4 row bg-dark my-3">
+    <div class="col-4"><%= link_to "予約",  root_path(anchor: "reservation"), class: "h3 text-white-50" %></div>
+    <div class="col-4"><%= link_to "メニュー", root_path(anchor: "menu"), class: "h3 text-white-50" %></div>
+    <div class="col-4"><%= link_to "アクセス", root_path(anchor: "access"), class: "h3 text-white-50" %></div>
+  </div>
+  <%= image_tag "bgimg.jpg", class: "w-75 h-25" %>
+</div>
+<h1 class="text-center my-4" id="reservation">reservation</h1>
+<div class="text-center w-100 row">
+  <div class="col-6">
+    <%= month_calendar do |date| %>
+      <p> ●</p>
+    <% end %>
+  </div>
+  <div class="col-6">
+    <%= month_calendar do |date| %>
+      <p> ●</p>
+    <% end %>
+  </div>
+</div>
+
+<h1 class="text-center my-4" id="menu">menu</h1>
+<div>
+  <!-- メニューをDBに入れて表示できる様にする -->
+  <ul>
+    <li>カット</li>
+      <p>カット</p>
+      <p>前髪カット</p>
+    <li>カラー</li>
+</div>
+
+<div id="access"><h1>access</h1></div>
