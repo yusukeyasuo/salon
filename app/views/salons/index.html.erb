@@ -1,6 +1,6 @@
 <div class="text-center container">
   <h1><%= image_tag "50:50.png" %></h1>
-  <div class="py-4 row bg-dark my-3">
+  <div class="py-4 row bg-dark my-3" id="header">
     <div class="col-4"><%= link_to "予約",  root_path(anchor: "reservation"), class: "h3 text-white-50" %></div>
     <div class="col-4"><%= link_to "メニュー", root_path(anchor: "menu"), class: "h3 text-white-50" %></div>
     <div class="col-4"><%= link_to "アクセス", root_path(anchor: "access"), class: "h3 text-white-50" %></div>
@@ -22,13 +22,48 @@
 </div>
 
 <h1 class="text-center my-4" id="menu">menu</h1>
-<div>
   <!-- メニューをDBに入れて表示できる様にする -->
-  <ul>
-    <li>カット</li>
-      <p>カット</p>
-      <p>前髪カット</p>
-    <li>カラー</li>
+
+<div class="row text-center">
+  <% @menus.each do |menu| %>
+    <div class="col-4">
+      <h3 class="h1 text-info"><%= menu.menu %></h3>
+
+      <% if menu.menu == "cut" %>
+        <% @cut.each do |cut| %>
+          <p><%= cut.details %> <%= cut.price %></p>
+        <% end %>
+
+      <% elsif menu.menu == "perm" %>
+        <% @perm.each do |perm| %>
+          <p><%= perm.details %> <%= perm.price %></p>
+        <% end %>
+
+      <% elsif menu.menu == "color" %>
+        <% @color.each do |color| %>
+          <p><%= color.details %> <%= color.price %></p>
+        <% end %>
+
+      <% end %>
+    </div>
+
+  <% end %>
 </div>
 
-<div id="access"><h1>access</h1></div>
+
+<div class="bg-secondary">
+<h1 class="text-center my-4" id="access">access</h1>
+<div class="row">
+  <div class="col-6 text-center">
+    <p class="text-light">50/50(フィフティフィフティ)</p>
+    <p class="text-light">000-111-2222</p>
+    <p class="text-light">xxxx@yyyyyy</p>
+    <p class="text-light">***県+++市↑↓6-7</p>
+    <p class="text-light">10時~21時</p>
+  </div>
+  <div class="col-6">
+    <h1>地図入れる</h1>
+    <!--<iframe src="">-->
+  </div>
+</div>
+</div>
