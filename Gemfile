@@ -66,3 +66,4 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem "bootstrap", "~> 4.1.1"
 gem "jquery-rails"
 gem "simple_calendar", "~> 2.0"
+gem "bootstrap-sass"
