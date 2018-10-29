@@ -8,19 +8,23 @@
   <%= image_tag "bgimg.jpg", class: "w-75 h-25" %>
 </div>
 <h1 class="text-center my-4" id="reservation">reservation</h1>
+<%= form_with url: new_reservation_path do |form| %>
+  <%= form.select [discard_day] %>
+<% end %>
+<!--
 <div class="text-center w-100 row">
   <div class="col-6">
-    <%= month_calendar do |date| %>
+    <//%= month_calendar do |date| %>
       <p> ●</p>
-    <% end %>
+    <//% end %>
   </div>
   <div class="col-6">
-    <%= month_calendar do |date| %>
+    <//%= month_calendar do |date| %>
       <p> ●</p>
-    <% end %>
+    <//% end %>
   </div>
 </div>
-
+-->
 <h1 class="text-center my-4" id="menu">menu</h1>
   <!-- メニューをDBに入れて表示できる様にする -->
 
