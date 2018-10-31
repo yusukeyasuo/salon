@@ -8,9 +8,36 @@
   <%= image_tag "bgimg.jpg", class: "w-75 h-25" %>
 </div>
 <h1 class="text-center my-4" id="reservation">reservation</h1>
-<%= form_with url: new_reservation_path do |form| %>
-  <%= form.select [discard_day] %>
+<!-- 月選択 -->
+<% month = Date.today %>
+<% n_month = Date.today.next_month %>
+<select>
+  <option value=<%= month.month %>><%= month.month %></option>
+  <option value=<%= n_month.month %>><%= n_month.month %></option>
+</select>
+<!-- 日付選択 -->
+<% days = [*month.beginning_of_month.day..month.end_of_month.day] %>
+<% today = Date.today %>
+<% today = today.day %>
+<select>
+  <% days.each do |day| %>
+    <% if today = day %>
+      <option value=<%= day %> selected><%= day %></option>
+    <% else %> 
+      <option value=<%= day %>><%= day %></option>
+    <% end %>
+  <% end %>
+</select>
+<!-- 時間選択 -->
+<% hour = [*10..18] %>
+<% minute = ["00", "30"] %>
+<select>
+<% hour.each do |ho| %>
+  <% minute.each do |mi| %>
+<option value=<%= ho %><%= mi %>><%= ho %>:<%= mi %></option>
+  <% end %>
 <% end %>
+</select>
 <!--
 <div class="text-center w-100 row">
   <div class="col-6">
@@ -63,12 +90,41 @@
       <p class="text-light">000-111-2222</p>
       <p class="text-light">xxxx@yyyyyy</p>
       <p class="text-light">***県+++市↑↓6-7</p>
-      <p class="text-light">10時~21時</p>
+      <p class="text-light">10時~19時</p>
     </div>
-    <div class="col-6" id="maps">
+    <div class="col-6" id="map">
     </div>
   </div>
 </div>
+<script type="text/javascript">
+    function initMap() {
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM&callback=initMap"></script>
+        var test ={lat: 34.7019399, lng: 135.51002519999997};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: test
+        });
+        var transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map);
+
+        var contentString = '住所：hoge';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position:test,
+            map: map,
+            title: contentString
+        });
+
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM&callback=initMap">
+</script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM&callback=initMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM&callback=initMap"></script>-->
