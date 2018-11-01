@@ -8,36 +8,91 @@
   <%= image_tag "bgimg.jpg", class: "w-75 h-25" %>
 </div>
 <h1 class="text-center my-4" id="reservation">reservation</h1>
-<!-- 月選択 -->
-<% month = Date.today %>
-<% n_month = Date.today.next_month %>
-<select>
-  <option value=<%= month.month %>><%= month.month %></option>
-  <option value=<%= n_month.month %>><%= n_month.month %></option>
-</select>
-<!-- 日付選択 -->
-<% days = [*month.beginning_of_month.day..month.end_of_month.day] %>
-<% today = Date.today %>
-<% today = today.day %>
-<select>
-  <% days.each do |day| %>
-    <% if today = day %>
-      <option value=<%= day %> selected><%= day %></option>
-    <% else %> 
-      <option value=<%= day %>><%= day %></option>
+<div class="text-center">
+  <!-- railsでの月日時送信フォーム -->
+  <% month = Date.today %>
+  <% n_month = Date.today.next_month %>
+  <% days = [*month.beginning_of_month.day..month.end_of_month.day] %>
+  <% today = Date.today.day %>
+  <% hour = [*10..18] %>
+  <% min = [":00", ":30"] %>
+  <% time = [] %>
+  <% hour.each do |h| %>
+    <% min.each do |m| %>
+      <% time << "#{h}#{m}" %>
     <% end %>
   <% end %>
-</select>
-<!-- 時間選択 -->
-<% hour = [*10..18] %>
-<% minute = ["00", "30"] %>
-<select>
-<% hour.each do |ho| %>
-  <% minute.each do |mi| %>
-<option value=<%= ho %><%= mi %>><%= ho %>:<%= mi %></option>
+  <%= form_with url: reservations_path do |form| %>  
+    <!-- 月選択 -->
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col-1">
+    <%= form.label :"月", {}, {class: "mx-4"} %>
+      </div>
+      <div class="col-1">
+    <%= form.label :"日", {}, {class: "mx-4"} %>
+      </div>
+      <div class="col-1">
+    <%= form.label :"時間", {}, {class: "mx-4"} %><br>
+      </div>
+    </div>
+    <div class="col-5"></div>
+    <div class="row">
+    <div class="col-4"></div>
+      <div class="col-1">
+    <%= form.select :reservations, [[month.month, month.month], [n_month.month, n_month.month]] %>
+      </div>
+    <!-- 日付選択 -->
+      <div class="col-1">
+    <%= form.select :reservations, days.map{|d| [d, d]}, :selected => today %>
+      </div>
+    <!-- 時間選択 -->
+      <div class="col-1">
+    <%= form.select :reservations, time.map{|t| [t,t]} %>
+      </div>
+    <div class="col-5"></div>
+    <//%= form.select :reservations, hour.map, min.map{|h,m| ["#{h}#{m}", "#{h}#{m}"]} %>
+    </div>
   <% end %>
-<% end %>
-</select>
+</div>
+<!-- 月日時フォームここまで -->
+
+
+<!-- htmlでの月日時送信 -->
+<form action="/home/vagrant/salon/app/view/salon/create.html.erb" method="POST" name="DateTime">
+  <div class="text-center">
+    <!-- 月選択 -->
+    <% month = Date.today %>
+    <% n_month = Date.today.next_month %>
+    <select class="mx-4">
+      <option value=<%= month.month %>><%= month.month %></option>
+      <option value=<%= n_month.month %>><%= n_month.month %></option>
+    </select>
+    <!-- 日付選択 -->
+    <% days = [*month.beginning_of_month.day..month.end_of_month.day] %>
+    <% today = Date.today.day %>
+    <select class="mx-4">
+      <% days.each do |day| %>
+        <% if today == day %>
+          <option value=<%= day %> selected><%= day %></option>
+        <% else %> 
+          <option value=<%= day %>><%= day %></option>
+        <% end %>
+      <% end %>
+    </select>
+    <!-- 時間選択 -->
+    <% hour = [*10..18] %>
+    <% minute = ["00", "30"] %>
+    <select class="mx-4">
+    <% hour.each do |ho| %>
+      <% minute.each do |mi| %>
+    <option value=<%= ho %><%= mi %>><%= ho %>:<%= mi %></option>
+      <% end %>
+    <% end %>
+    </select>
+  </div>
+</form>
+
 <!--
 <div class="text-center w-100 row">
   <div class="col-6">
