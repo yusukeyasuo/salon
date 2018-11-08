@@ -1,4 +1,4 @@
-class SalonsController < ApplicationController
+class ReservationsController < ApplicationController
   def index
     @menus = Menu.all() 
     @cut = MenuContent.where(menu_id: 1)
@@ -8,5 +8,4 @@ class SalonsController < ApplicationController
 
   def create
   end
-
 end
