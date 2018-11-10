@@ -22,7 +22,7 @@
       <% time << "#{h}#{m}" %>
     <% end %>
   <% end %>
-  <%= form_with url: reservations_path do |form| %>  
+  <%= form_with url: reservations_path, local: true do |form| %>  
     <!-- 月選択 -->
     <div class="row">
       <div class="col-4"></div>

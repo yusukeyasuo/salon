@@ -1,4 +1,14 @@
-<% form_with url: reservations_path do |form| %>
-  <%= form.label :"氏名", {}, {class: "mx-3"} %>
-  <%= form.text_field :name, placeholder: "名前を入力してください" %>
+<p><%= @month %>月<%= @day %>日<%= @time %></p>
+
+<%= form_with url: reservations_path do |form| %>
+  <%= form.label :"氏名(漢字)：", {}, {class: "mx-3"} %>
+  <%= form.text_field :name1, placeholder: "名前を入力してください" %><br/>
+  <%= form.label :"氏名(カタカナ)：", {}, {class: "mx-3"} %>
+    <%= form.text_field :name2, placeholder: "名前を入力してください" %><br/>
+  <%= form.label :"電話番号：", {}, {class: "mx-3"} %>
+    <%= form.text_field :tel, placeholder: "ハイフンなしで入力してください" %><br/>
+  <%= form.label :"メニュー", {}, {class: "mx-3"} %>
+    <%= form.select :menu, @menu %><br/>
+  <br/>
+  <%= form.submit %>
 <% end %>

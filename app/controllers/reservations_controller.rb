@@ -7,5 +7,9 @@ class ReservationsController < ApplicationController
   end
 
   def create
+    @month = params[:month]
+    @day = params[:day] 
+    @time = params[:time]
+    @menu = MenuContent.select("details")
   end
 end
