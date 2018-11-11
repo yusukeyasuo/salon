@@ -12,11 +12,16 @@
         width: 700px;
         height: 400px;
       }
+      .icon{
+        text-align: center;
+      }
+
     </style>
     <% require "date" %>
   </head>
 
   <body>
+  <h1 class="icon"><%= image_tag "50:50.png" %></h1>
     <%= yield %>
   </body>
 </html>

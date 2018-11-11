@@ -10,6 +10,6 @@ class ReservationsController < ApplicationController
     @month = params[:month]
     @day = params[:day] 
     @time = params[:time]
-    @menu = MenuContent.all()
+    @menu = MenuContent.select("details")
   end
 end
