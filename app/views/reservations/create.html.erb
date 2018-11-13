@@ -15,10 +15,18 @@
   </div>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"メニュー" %></div>
+    <!--<div class="col-7 text-left"><//%= form.select :menu, @menu.map{|m| [m.details,m.details]}, multiple: true %></div><br/>-->
     <div class="col-7 text-left"><%= form.select :menu, @menu.map{|m| [m.details,m.details]}, multiple: true %></div><br/>
+    
   </div>
-  <!-- menuモーダル -->
   <br/>
   <%= form.submit value: "予約する" %>
+<% end %>
+
+<%= form_with model: @reservations, url: reservations_add_path, local: true do |f| %>
+  <%= f.collection_check_boxes :menu, @menu, :details, :details do |m| %>
+    <%= m.label { m.check_box + m.text } %>
+  <% end %>
+  <%= f.submit %>
 <% end %>
 </div>

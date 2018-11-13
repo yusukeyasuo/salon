@@ -10,6 +10,11 @@ class ReservationsController < ApplicationController
     @month = params[:month]
     @day = params[:day] 
     @time = params[:time]
-    @menu = MenuContent.select("details")
+    @menu = MenuContent.all()
+    @reservations = Reservation.new
+  end
+
+  def add
+    render plain: params[:menu].inspect
   end
 end

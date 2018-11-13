@@ -12,29 +12,29 @@
 
 ActiveRecord::Schema.define(version: 2018_10_25_070747) do
 
-  create_table "meetings", force: :cascade do |t|
+  create_table "meetings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "start_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "menu_contents", force: :cascade do |t|
+  create_table "menu_contents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "details"
     t.integer "price"
-    t.integer "menu_id"
+    t.bigint "menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_id"], name: "index_menu_contents_on_menu_id"
   end
 
-  create_table "menus", force: :cascade do |t|
+  create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "menu"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "reservations", force: :cascade do |t|
+  create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.integer "date"
     t.integer "time"
@@ -43,4 +43,5 @@ ActiveRecord::Schema.define(version: 2018_10_25_070747) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "menu_contents", "menus"
 end
