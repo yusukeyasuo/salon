@@ -9,7 +9,8 @@
   <% year = Time.new.year.to_s %>
 <% end %>
 
-<% ymdt = year + "-" + @month + "-" + @day + " " + @time %>
+<% start_time = year + "-" + @month + "-" + @day + " " + @time %>
+<% end_time = Time.parse(start_time) + (60 * 60) %>
 <div class="text-center mt-4">
 <h2><%= year %>年<%= @month %>月<%= @day %>日<%= @time %></h2>
 <!-- local: true を入れないとページ遷移しない -->
@@ -20,7 +21,7 @@
   </div>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"氏名(カタカナ)" %></div>
-    <div class="col-7 text-left"><%= form.text_field :name1, placeholder: "名前を入力してください", class: "txt"  %></div><br/>
+    <div class="col-7 text-left"><%= form.text_field :name_kana, placeholder: "名前を入力してください", class: "txt"  %></div><br/>
   </div>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"電話番号" %></div>
@@ -34,7 +35,8 @@
     <%= m.label { m.check_box + m.text } %>
   <% end %>
   <br/>
-  <%= hidden_field_tag :datetime, ymdt %>
+  <%= hidden_field_tag :start_time, start_time %>
+  <%= hidden_field_tag :end_time, end_time %>
   <%= form.submit value: "予約する" %>
 <% end %>
 </div>

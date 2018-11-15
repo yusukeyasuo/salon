@@ -15,8 +15,8 @@ class ReservationsController < ApplicationController
   end
 
   def add
-    #render plain: params[:reservation][:name1].inspect
     params[:reservation][:menu] = params[:reservation][:menu].join(",")
+    #render plain: params[:reservation].inspect
     @reservations = Reservation.new(strong_params)
     if @reservations.save
       redirect_to reservations_path
@@ -28,8 +28,7 @@ class ReservationsController < ApplicationController
 
   private
     def strong_params
-      #いらないかも？
-      params.require(:reservation).permit(:name, :name1, :tel, :menu, :datetime)
+      params.require(:reservation).permit(:name, :menu, :start_time, :end_time, :name_kana, :tel)
     end
 
 end
