@@ -9,8 +9,13 @@
   <% year = Time.new.year.to_s %>
 <% end %>
 
-<% start_time = year + "-" + @month + "-" + @day + " " + @time %>
-<% end_time = Time.parse(start_time) + (60 * 60) %>
+<!--<#% start_time = year + "-" + @month + "-" + @day + " " + @time %>
+<#% end_time = Time.parse(start_time) + (60 * 60) %> -->
+<% start_time = Time.new(year, @month, @day, @time) %>
+<% end_time = (start_time + 1.hour) %>
+<%= start_time %>
+<%= end_time %>
+
 <div class="text-center mt-4">
 <h2><%= year %>年<%= @month %>月<%= @day %>日<%= @time %></h2>
 <!-- local: true を入れないとページ遷移しない -->
@@ -35,8 +40,8 @@
     <%= m.label { m.check_box + m.text } %>
   <% end %>
   <br/>
-  <%= hidden_field_tag :start_time, start_time %>
-  <%= hidden_field_tag :end_time, end_time %>
+  <%= form.hidden_field :start_time, value: start_time %>
+  <%= form.hidden_field :end_time, value: end_time %>
   <%= form.submit value: "予約する" %>
 <% end %>
 </div>
