@@ -15,6 +15,21 @@ class ReservationsController < ApplicationController
   end
 
   def add
-    render plain: params[:menu].inspect
+    #render plain: params[:reservation][:name1].inspect
+    params[:reservation][:menu] = params[:reservation][:menu].join(",")
+    @reservations = Reservation.new(strong_params)
+    if @reservations.save
+      redirect_to reservations_path
+    else
+      #render：viewを明示的に指定
+      render "index"
+    end
   end
+
+  private
+    def strong_params
+      #いらないかも？
+      params.require(:reservation).permit(:name, :name1, :tel, :menu, :datetime)
+    end
+
 end

@@ -1,13 +1,26 @@
+<% if @reservations.errors.messages[:menu].any? %>
+  <span class="error"><%= @reservations.errors.messages[:menu] %></span>
+<% end %>
+
+<!-- １月の予約は来年 -->
+<% if @month == "1" %>
+  <% year = Time.new.next_year.to_s %>
+<% else %>
+  <% year = Time.new.year.to_s %>
+<% end %>
+
+<% ymdt = year + "-" + @month + "-" + @day + " " + @time %>
 <div class="text-center mt-4">
-<h2><%= @month %>月<%= @day %>日<%= @time %></h2>
-<%= form_with url: reservations_path do |form| %>
+<h2><%= year %>年<%= @month %>月<%= @day %>日<%= @time %></h2>
+<!-- local: true を入れないとページ遷移しない -->
+<%= form_with model: @reservations, url: reservations_add_path, local: true do |form| %>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"氏名(漢字)" %></div>
-    <div class="col-7 text-left"><%= form.text_field :name1, placeholder: "名前を入力してください", class: "txt" %></div><br/>
+    <div class="col-7 text-left"><%= form.text_field :name, placeholder: "名前を入力してください", class: "txt" %></div><br/>
   </div>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"氏名(カタカナ)" %></div>
-    <div class="col-7 text-left"><%= form.text_field :name2, placeholder: "名前を入力してください", class: "txt"  %></div><br/>
+    <div class="col-7 text-left"><%= form.text_field :name1, placeholder: "名前を入力してください", class: "txt"  %></div><br/>
   </div>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"電話番号" %></div>
@@ -15,18 +28,13 @@
   </div>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"メニュー" %></div>
-    <!--<div class="col-7 text-left"><//%= form.select :menu, @menu.map{|m| [m.details,m.details]}, multiple: true %></div><br/>-->
-    <div class="col-7 text-left"><%= form.select :menu, @menu.map{|m| [m.details,m.details]}, multiple: true %></div><br/>
-    
   </div>
-  <br/>
-  <%= form.submit value: "予約する" %>
-<% end %>
-
-<%= form_with model: @reservations, url: reservations_add_path, local: true do |f| %>
-  <%= f.collection_check_boxes :menu, @menu, :details, :details do |m| %>
+  <!-- include_hidden: false を入れないと配列を受け取った時先頭に空白が入る -->
+  <%= form.collection_check_boxes :menu, @menu, :details, :details, include_hidden: false do |m| %>
     <%= m.label { m.check_box + m.text } %>
   <% end %>
-  <%= f.submit %>
+  <br/>
+  <%= hidden_field_tag :datetime, ymdt %>
+  <%= form.submit value: "予約する" %>
 <% end %>
 </div>
