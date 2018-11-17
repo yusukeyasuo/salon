@@ -4,6 +4,8 @@ class ReservationsController < ApplicationController
     @cut = MenuContent.where(menu_id: 1)
     @perm = MenuContent.where(menu_id: 2)
     @color = MenuContent.where(menu_id: 3)
+    @reservation = Reservation.select("start_time")
+    @mon = params[:month]
   end
 
   def create

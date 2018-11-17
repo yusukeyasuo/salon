@@ -9,10 +9,10 @@
 <h1 class="text-center my-4" id="reservation">reservation</h1>
 <div class="text-center">
   <!-- railsでの月日時送信フォーム -->
-  <% month = Date.today %>
-  <% n_month = Date.today.next_month %>
-  <% days = [*month.beginning_of_month.day..month.end_of_month.day] %>
-  <% today = Date.today.day %>
+  <% today = Date.today %>
+  <% next_month = today.next_month %>
+  <% days = [*today.beginning_of_month.day..today.end_of_month.day] %>
+  <% day = today.day %>
   <% hour = [*10..18] %>
   <% min = [":00", ":30"] %>
   <% time = [] %>
@@ -22,7 +22,6 @@
     <% end %>
   <% end %>
   <%= form_with url: reservations_path, local: true do |form| %>  
-    <!-- 月選択 -->
     <div class="row">
       <div class="col-4"></div>
       <div class="col-1">
@@ -39,41 +38,30 @@
     <div class="row">
     <div class="col-4"></div>
       <div class="col-1">
-    <%= form.select :month, [[month.month, month.month], [n_month.month, n_month.month]] %>
+    <!-- 月選択 -->
+    <%= form.select :month, [[today.month, today.month], [next_month.month, next_month.month]] %>
       </div>
     <!-- 日付選択 -->
       <div class="col-1">
-    <%= form.select :day, days.map{|d| [d, d]}, :selected => today %>
+    <%= form.select :day, days.map{|d| [d, d]}, :selected => day %>
       </div>
     <!-- 時間選択 -->
       <div class="col-1">
     <%= form.select :time, time.map{|t| [t,t]} %>
       </div>
       <div class="col-5"></div>
-    <//%= form.select :reservations, hour.map, min.map{|h,m| ["#{h}#{m}", "#{h}#{m}"]} %>
     </div>
     <%= form.submit value: "予約フォームへ", class: "m-4" %>
   <% end %>
 </div>
-<!-- 月日時フォームここまで -->
+<!-- 月日時フォームここまで 
+<#% @reservation.each do |r| %>
+ <p><#%= r.start_time %></p>
+ <#% end %> -->
+<h3>ajax</h3>
+<h3><%= @mon.class %></h3>
 
-
-<!--
-<div class="text-center w-100 row">
-  <div class="col-6">
-    <//%= month_calendar do |date| %>
-      <p> ●</p>
-    <//% end %>
-  </div>
-  <div class="col-6">
-    <//%= month_calendar do |date| %>
-      <p> ●</p>
-    <//% end %>
-  </div>
-</div>
--->
 <h1 class="text-center my-4" id="menu">menu</h1>
-  <!-- メニューをDBに入れて表示できる様にする -->
 
 <div class="row text-center">
   <% @menus.each do |menu| %>
