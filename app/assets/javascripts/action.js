@@ -38,24 +38,38 @@ $(function(){
   $("#month").change(function(){
     var month = $("#month").val();
     console.log(month);
-    $.ajax({
-      url: "/reservations",
-      type: "GET",
-      data: {month: $("#month").val()},
-      datatype: "html",
-      success: function(data){
-        console.log("success");
-      },
-      error: function(data){
-        console.log("error");
-      }
-      });
+    getTimes()
+  });
+  $("#day").change(function(){
+    var day = $("#day").val();
+    console.log(day);
+    getTimes()
   });
   //[name=day]：nameのdayを指定
   $("[name=day]").change(function(){
     var day = $("[name=day]").val();
     console.log(day);
   });
+  
+  function getTimes() {
+    $.ajax({
+      url: "/reservations",
+      type: "GET",
+      data: { month: $("#month").val(), day: $("#day").val() },
+      success: function(data){
+        console.log("success");
+        console.log(data.time);
+        var html = "";
+        for (var i = 0; i < data.time.length; i++) {
+          html += '<option value="' + data.time[i] + '">' + data.time[i] + '</option>'
+        }
+        $("#time").html(html);
+      },
+      error: function(data){
+        console.log("error");
+      }
+    });
+  }
 //  var test = $("#month").prop("month");
 //  console.log(test);
 //  var header = $("#header");  //スクロールするヘッダーのid

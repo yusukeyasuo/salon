@@ -6,6 +6,20 @@ class ReservationsController < ApplicationController
     @color = MenuContent.where(menu_id: 3)
     @reservation = Reservation.select("start_time")
     @mon = params[:month]
+    @day = params[:day]
+     if @mon && @day
+      render :json => { time: [
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "12:30",
+        "13:00",
+        "14:00",
+        "15:00"
+      ]}
+    end
   end
 
   def create
@@ -32,5 +46,5 @@ class ReservationsController < ApplicationController
     def strong_params
       params.require(:reservation).permit(:name, :menu, :start_time, :end_time, :name_kana, :tel)
     end
-
+    
 end
