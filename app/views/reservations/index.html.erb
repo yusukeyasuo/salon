@@ -9,6 +9,7 @@
 <h1 class="text-center my-4" id="reservation">reservation</h1>
 <div class="text-center">
   <!-- railsでの月日時送信フォーム -->
+  <!-- この処理はコントローラのがいいかも？ -->
   <% today = Date.today %>
   <% next_month = today.next_month %>
   <% days = [*today.beginning_of_month.day..today.end_of_month.day] %>
@@ -21,6 +22,9 @@
       <% time << "#{h}#{m}" %>
     <% end %>
   <% end %>
+
+<p id="time"></p>
+
   <%= form_with url: reservations_path, local: true do |form| %>  
     <div class="row">
       <div class="col-4"></div>
@@ -47,7 +51,9 @@
       </div>
     <!-- 時間選択 -->
       <div class="col-1">
-    <%= form.select :time, time.map{|t| [t,t]} %>
+      <!-- 第２引数にはselectのオプションprompt、include_blankを設定、
+      　　 第３引数にはhtmlのオプションを設定。idとかclass-->
+      <%= form.select :time, time.map{|t| [t,t]},{}, {:class => "select_time"} %>
       </div>
       <div class="col-5"></div>
     </div>
@@ -58,8 +64,6 @@
 <#% @reservation.each do |r| %>
  <p><#%= r.start_time %></p>
  <#% end %> -->
-<h3>ajax</h3>
-<h3><%= @mon.class %></h3>
 
 <h1 class="text-center my-4" id="menu">menu</h1>
 

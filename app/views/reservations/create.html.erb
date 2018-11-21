@@ -14,8 +14,8 @@
 
 <!--<#% start_time = year + "-" + @month + "-" + @day + " " + @time %>
 <#% end_time = Time.parse(start_time) + (60 * 60) %> -->
-<% start_time = Time.new(year, @month, @day, hour, min) + 9.hour %>
-<% end_time = (start_time + 10.hour) %>
+<% start_time = Time.new(year, @month, @day, hour, min) %>
+<% end_time = (start_time + 1.hour) %>
 
 <div class="text-center mt-4">
 <h2><%= year %>年<%= @month %>月<%= @day %>日<%= @time %></h2>

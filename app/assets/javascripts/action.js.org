@@ -27,48 +27,79 @@
 //}
 
 $(function(){
+// 選択した月日を変数へ代入
   var month = $("#month").val();
   console.log(month);
   var day = $("#day").val();
   console.log(day);
 
+// Ajaxで現在の月をrubyに渡す
+  $.ajax({
+    url: "/reservations",
+    type: "GET",
+    data: {month: $("#month").val()},
+    datatype: "json",
+    success: function(data){
+      $("#ajax_month").html(data);
+      console.log("success");
+    },
+    error: function(data){
+      console.log("error");
+    }
+  });
+
   // 月が変更されたらvalue属性の値を取り出す
   $("#month").change(function(){
     var month = $("#month").val();
     console.log(month);
-    getTimes()
+  $("#ajax_month").html(month);
+    $.ajax({
+      url: "/reservations",
+      type: "GET",
+      data: {month: $("#month").val()},
+      datatype: "html",
+      success: function(data){
+        $("#ajax_month").html(data)
+        console.log(data.time);
+      },
+      error: function(data){
+        console.log("error");
+      }
+    });
+  });
+
+  // 月と同じように日も
+  //[name=day]：nameのdayを指定
+  $.ajax({
+    url: "/reservations",
+    type: "GET",
+    data: {day: $("#day").val()},
+    datatype: "html",
+    success: function(data){
+      $("#ajax_day").html(data)
+    },
+    error: function(data){
+      console.log("error");
+    }
   });
 
   // 日が変更されたらvalue属性の値を取り出す
   $("#day").change(function(){
     var day = $("#day").val();
     console.log(day);
-    getTimes()
-  });
-
-  function getTimes(){
     $.ajax({
       url: "/reservations",
       type: "GET",
-      data: { 
-        month: $("#month").val(),
-        day: $("#day").val()
-      },
+      data: {day: $("#day").val()},
+      datatype: "html",
       success: function(data){
-        console.log("success");
-        console.log(data.time);
-        var option = "";
-        for (var i = 0; i < data.time.length; i++){
-          option += '<option value="' + data.time[i] + '">' + data.time[i] + '</option>'
-        }
-        $(".select_time").html(option);
+        $("#ajax_day").html(data)
       },
       error: function(data){
         console.log("error");
       }
     });
-  };
-
+  });
 
   
 //  var test = $("#month").prop("month");
