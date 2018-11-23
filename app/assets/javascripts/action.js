@@ -1,5 +1,5 @@
 $(function(){
-  // ------------reservation関連 ----------------
+// ------------reservation関連 ----------------
   var month = $("#month").val();
   console.log(month);
   var day = $("#day").val();
@@ -28,7 +28,6 @@ $(function(){
         day: $("#day").val()
       },
       success: function(data){
-        console.log("success");
         console.log(data.time);
         var option = "";
         for (var i = 0; i < data.time.length; i++){
@@ -42,7 +41,7 @@ $(function(){
     });
   };
 
- // -------- スクロールヘッダー --------
+// -------- スクロールヘッダー --------
   var header = $("#header"),  //スクロールするヘッダーのid
       adclass = "scrolled",   //スクロールバーのクラス
       $main = $("#scroll"),
@@ -59,7 +58,7 @@ $(function(){
     }
   });
 
-  // -------- ページ内リンク -------
+// -------- ページ内リンク -------
   // URLハッシュ#取得
 //  var urlHash = location.hash;
 //  // ハッシュ#あればページ内スクロール
