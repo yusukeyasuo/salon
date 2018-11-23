@@ -1,11 +1,13 @@
 <div class="text-center container">
-  <div class="py-4 row bg-dark my-3" id="header">
+<!--<div class="py-4 row bg-dark my-3" id="header">-->
+  <div class="no_scroll" id="header">
     <div class="col-4"><%= link_to "予約",  root_path(anchor: "reservation"), class: "h3 text-white-50" %></div>
     <div class="col-4"><%= link_to "メニュー", root_path(anchor: "menu"), class: "h3 text-white-50" %></div>
     <div class="col-4"><%= link_to "アクセス", root_path(anchor: "access"), class: "h3 text-white-50" %></div>
   </div>
-  <%= image_tag "bgimg.jpg", class: "w-75 h-25" %>
 </div>
+<div id="scroll" style="margin-top: 0px;">
+<div class="text-center container"><%= image_tag "bgimg.jpg", class: "w-75 h-25" %></div>
 <h1 class="text-center my-4" id="reservation">reservation</h1>
 <div class="text-center">
   <!-- railsでの月日時送信フォーム -->
@@ -67,7 +69,7 @@
 
 <h1 class="text-center my-4" id="menu">menu</h1>
 
-<div class="row text-center">
+<div class="row menu_text">
   <% @menus.each do |menu| %>
     <div class="col-4">
       <h3 class="h1 text-info"><%= menu.menu %></h3>
@@ -97,39 +99,45 @@
 <div class="bg-secondary">
   <h1 class="text-center my-4" id="access">access</h1>
   <div class="row">
-    <div class="col-6 text-center">
-      <p class="text-light">50/50(フィフティフィフティ)</p>
-      <p class="text-light">000-111-2222</p>
-      <p class="text-light">xxxx@yyyyyy</p>
-      <p class="text-light">***県+++市↑↓6-7</p>
-      <p class="text-light">10時~19時</p>
+    <div class="col-6">
+      <p class="text-light access_text">50/50(フィフティフィフティ)</p>
+      <p class="text-light access_text">TEL：000-111-2222</p>
+      <p class="text-light access_text">mail：xxxx@yyyyyy</p>
+      <p class="text-light access_text">住所：***県+++市↑↓6-7</p>
+      <p class="text-light access_text">営業時間：10時~19時</p>
+      <p class="text-light access_text">定休日：毎週月曜・第２、４火曜日</p>
     </div>
     <div class="col-6" id="map">
     </div>
   </div>
 </div>
-<script type="text/javascript">
+<script async defer
+ type="text/javascript">
     function initMap() {
-
+        //マップ表示
+        //test 座標
         var test ={lat: 34.7019399, lng: 135.51002519999997};
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
+            zoom: 19,
             center: test
         });
         var transitLayer = new google.maps.TransitLayer();
         transitLayer.setMap(map);
 
+        //地図上のピン情報
         var contentString = '住所：hoge';
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
 
+        //地図上にピンを表示
         var marker = new google.maps.Marker({
             position:test,
             map: map,
             title: contentString
         });
 
+        //クリック時にピン情報表示
         marker.addListener('click', function() {
             infowindow.open(map, marker);
         });
@@ -140,3 +148,4 @@
 </script>
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM&callback=initMap"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM&callback=initMap"></script>-->
+</div>

@@ -1,32 +1,5 @@
-//function initMap() {
-//  var test ={lat: 34.7019399, lng: 135.51002519999997};
-//  var map = new google.maps.Map(document.getElementById('map'), {
-//    zoom: 15,
-//    center: test
-//  });
-//  var transitLayer = new google.maps.TransitLayer();
-//  transitLayer.setMap(map);
-//
-//  var contentString = '住所：hoge';
-//  var infowindow = new google.maps.InfoWindow({
-//    content: contentString
-//  });
-//
-//  var marker = new google.maps.Marker({
-//    position:test,
-//    map: map,
-//    title: contentString
-//  });
-//
-//  marker.addListener('click', function() {
-//    infowindow.open(map, marker);
-//  });
-//<script async defer
-//        src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAClZyQNNSuhJtOIvDCbBSlrBwPci8BphM&callback=initMap">
-//</script>
-//}
-
 $(function(){
+  // ------------reservation関連 ----------------
   var month = $("#month").val();
   console.log(month);
   var day = $("#day").val();
@@ -69,30 +42,50 @@ $(function(){
     });
   };
 
+ // -------- スクロールヘッダー --------
+  var header = $("#header"),  //スクロールするヘッダーのid
+      adclass = "scrolled",   //スクロールバーのクラス
+      $main = $("#scroll"),
+      scrollY = 100;           //スクロール幅(px)
+  $(window).scroll(function(){
+    if ($(window).scrollTop() > scrollY){
+      header.addClass(adclass);
+      header.removeClass("no_scroll");
+      $main.css("margin-top", 116);
+    }else{
+      header.addClass("no_scroll");
+      header.removeClass(adclass);
+      $main.css("margin-top", "0");
+    }
+  });
 
-  
-//  var test = $("#month").prop("month");
-//  console.log(test);
-//  var header = $("#header");  //スクロールするヘッダーのid
-//  var adclass = "scrolled";   //スクロールバーのクラス
-//  var scrollY = 15;           //スクロール幅(px)
-//  $(window).scroll(function(){
-//    if ($(window).scrollTop() > scrollY){
-//      header.addClass(adclass);
-//    }else{
-//      header.removeClass(adclass);
-//    }
-//  });
-//  var map;
-//  function initMap(){
-//    map = new google.maps.Map(document.getElementById("map"),{
-//      center:{
-//        lat: 34.7019399,     //緯度
-//        leg: 135.51002519999997     //経度
-//      },
-//      zoom: 19 //地図のズーム
-//    });
+  // -------- ページ内リンク -------
+  // URLハッシュ#取得
+//  var urlHash = location.hash;
+//  // ハッシュ#あればページ内スクロール
+//  if(urlHash){
+//    // スクロールを０に戻す stop()->動きを止める
+//    $("body,html").stop().scrollTop(0);
+//    setTimeout(function(){
+//      // ロード時の処理待ち、時間差でスクロール
+//      scrollToAnker(urlHash);
+//    }, 100);
+//  }
+//  $("a[href^='#']").click(function(){
+//    // ぺージ内リンク先取得
+//    var href = $(this).attr("href");
+//    // リンク先が#かからだったらhtmlに
+//    var hash = href == "#" || href == "" ? "html" : href;
+//    // スクロール実行
+//    scrollToAnker(hash);
+//    // リンク無効化
+//    return false;
+//  })
+//
+//  function scrollToAnker(hash){
+//    var target = $(hash);
+//    var position = target.offset().top;
+//    $("body,html").stop().animate({scrollTop:position}, 500);
 //  }
 });
-
 
