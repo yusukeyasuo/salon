@@ -38,7 +38,10 @@ class ReservationsController < ApplicationController
       @reservation = Reservation.select('start_time').where(start_time: search_date.in_time_zone.all_day)
       # 予約済みの時間を取り出す
       @reservation.each do |r|
-        reserved_time << r.start_time.hour.to_s + ':' + r.start_time.min.to_s
+        reserved = r.start_time.hour.to_s + ':' + r.start_time.min.to_s
+        reserved_index = reservation_time_default.index(reserved)
+        reserved_time << reserved
+        reserved_time << reservation_time_default[reserved_index + 1]
       end
       # 予約済み時間を引く
       reservation_time = reservation_time_default - reserved_time
