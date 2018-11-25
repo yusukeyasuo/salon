@@ -45,9 +45,5 @@ ActiveRecord::Schema.define(version: 2018_11_15_084206) do
     t.string "tel"
   end
 
-  create_table "test_datetime", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.datetime "reservation"
-  end
-
   add_foreign_key "menu_contents", "menus"
 end
