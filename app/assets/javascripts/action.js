@@ -64,6 +64,38 @@ $(function(){
       $main.css("margin-top", "0");
     }
   });
+// --------- google_map ------------
+//  function initMap() {
+//    //マップ表示
+//    //test 座標
+//    var test ={lat: 34.7019399, lng: 135.51002519999997};
+//    var map = new google.maps.Map(document.getElementById('map'), {
+//      zoom: 19,
+//      center: test
+//    });
+//    var transitLayer = new google.maps.TransitLayer();
+//    transitLayer.setMap(map);
+//
+//    //地図上のピン情報
+//    var contentString = '住所：hoge';
+//    var infowindow = new google.maps.InfoWindow({
+//      content: contentString
+//    });
+//
+//    //地図上にピンを表示
+//    var marker = new google.maps.Marker({
+//      position:test,
+//      map: map,
+//      title: contentString
+//    });
+//
+//    //クリック時にピン情報表示
+//    marker.addListener('click', function() {
+//      infowindow.open(map, marker);
+//    });
+//  }
+
+
 
 // -------- ページ内リンク -------
   // URLハッシュ#取得
