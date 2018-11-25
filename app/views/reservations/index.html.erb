@@ -33,13 +33,13 @@
       </div>
     <!-- 日付選択 -->
       <div class="col-1">
-        <%= form.select :day, @days.map{|d| [d, d]},{}, {:class => "select_day"} %>
+        <%= form.select :day, @days.map{|d| [d, d]},{:selected => @day}, {:class => "select_day"} %>
       </div>
     <!-- 時間選択 -->
       <div class="col-1">
       <!-- 第２引数にはselectのオプションprompt、include_blankを設定、
       　　 第３引数にはhtmlのオプションを設定。idとかclass-->
-      <%= form.select :time, @time.map{|t| [t,t]},{}, {:class => "select_time"} %>
+        <%= form.select :time, @time.map{|t| [t,t]},{}, {:class => "select_time"} %>
       </div>
       <div class="col-5"></div>
     </div>

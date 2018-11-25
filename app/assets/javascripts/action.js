@@ -4,7 +4,6 @@ $(function(){
   console.log(month);
   var day = $("#day").val();
   console.log(day);
-  getTimes();
 
   // 月が変更されたらvalue属性の値を取り出す
   $("#month").change(function(){
