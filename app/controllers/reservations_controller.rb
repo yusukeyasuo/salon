@@ -6,6 +6,18 @@ class ReservationsController < ApplicationController
     @cut = MenuContent.where(menu_id: 1)
     @perm = MenuContent.where(menu_id: 2)
     @color = MenuContent.where(menu_id: 3)
+    @today = Date.today
+    @next_month = @today.next_month
+    @days = [*@today.beginning_of_month.day..@today.end_of_month.day]
+    @day = @today.day
+    @hour = [*10..18]
+    @min = [":00", ":30"]
+    @time = []
+    @hour.each do |h|
+      @min.each do |m|
+        @time << "#{h}#{m}"
+      end
+    end
     @ajax_mon = params[:month]
     @ajax_day = params[:day]
     # 予約済み時間
@@ -31,34 +43,11 @@ class ReservationsController < ApplicationController
       '18:00',
       '18:30'
     ]
-    if @ajax_mon && @ajax_day
-      # 検索する年月日
-      search_date = Time.new.year.to_s + '-' + @ajax_mon.to_s + '-' + @ajax_day.to_s
-      # search_dateを元にその年月日の予約を取り出す
-      @reservation = Reservation.select('start_time').where(start_time: search_date.in_time_zone.all_day)
-      # 予約済みの時間を取り出す
-      @reservation.each do |r|
-        reserved = r.start_time.hour.to_s + ':' + r.start_time.min.to_s
-        reserved_index = reservation_time_default.index(reserved)
-        reserved_time << reserved
-        reserved_time << reservation_time_default[reserved_index + 1]
-      end
-      # 予約済み時間を引く
-      reservation_time = reservation_time_default - reserved_time
-      render json: { time: reservation_time }
-    end
-    @today = Date.today
-    @next_month = @today.next_month
-    @days = [*@today.beginning_of_month.day..@today.end_of_month.day]
-    @day = @today.day
-    @hour = [*10..18]
-    @min = [":00", ":30"]
-    @time = []
-    @hour.each do |h|
-      @min.each do |m|
-        @time << "#{h}#{m}"
-      end
-    end
+
+
+
+
+
     @days_date = [*@today.beginning_of_month..@today.end_of_month]
     @weekly = []
     @days_date.each do |d|
@@ -77,6 +66,29 @@ class ReservationsController < ApplicationController
       @days_weekly_hash.delete(@tuesday[1]) 
     end
     @days = @days_weekly_hash.keys
+    if @ajax_mon && @ajax_day
+      # 検索する年月日
+      search_date = Time.new.year.to_s + '-' + @ajax_mon.to_s + '-' + @ajax_day.to_s
+      # search_dateを元にその年月日の予約を取り出す
+      @reservation = Reservation.select('start_time').where(start_time: search_date.in_time_zone.all_day)
+      # 予約済みの時間を取り出す
+      @reservation.each do |r|
+        reserved = r.start_time.hour.to_s + ':' + r.start_time.min.to_s
+        reserved_index = reservation_time_default.index(reserved)
+        reserved_time << reserved
+        reserved_time << reservation_time_default[reserved_index + 1]
+      end
+      # 予約済み時間を引く
+      reservation_time = reservation_time_default - reserved_time
+      render json: {
+        time: reservation_time,
+        day: @days  
+        }
+    end
+
+
+
+
   end
 
   def create

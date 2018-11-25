@@ -33,7 +33,7 @@
       </div>
     <!-- 日付選択 -->
       <div class="col-1">
-    <%= form.select :day, @days.map{|d| [d, d]}, :selected => @day %>
+        <%= form.select :day, @days.map{|d| [d, d]},{}, {:class => "select_day"} %>
       </div>
     <!-- 時間選択 -->
       <div class="col-1">
