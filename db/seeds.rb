@@ -8,7 +8,7 @@
 Menu.create(id: 1, menu: "cut")
 Menu.create(id: 2, menu: "perm")
 Menu.create(id: 3, menu: "color")
-MenuContent.create(details: "カット", price: 3000, menu_id: 1)
+MenuContent.create(details: "<script>alert('hoge');</script>", price: 3000, menu_id: 1)
 MenuContent.create(details: "前髪カット", price: 500, menu_id: 1)
 MenuContent.create(details: "キッズカット", price: 2000, menu_id: 1)
 MenuContent.create(details: "ポイントパーマ", price: 1500, menu_id: 2)

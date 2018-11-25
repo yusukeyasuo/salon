@@ -57,7 +57,7 @@
 
       <% if menu.menu == "cut" %>
         <% @cut.each do |cut| %>
-          <p><%= cut.details %> <%= cut.price %></p>
+          <p><%= cut.details.html_safe %> <%= cut.price %></p>
         <% end %>
 
       <% elsif menu.menu == "perm" %>
