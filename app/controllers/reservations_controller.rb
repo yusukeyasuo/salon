@@ -21,10 +21,15 @@ class ReservationsController < ApplicationController
     @ajax_mon = params[:month]
     @ajax_day = params[:day]
 
-    if @mon.present?
-      day_week(@today.year, @ajax_month, @ajax_day)
+    if @ajax_mon.present?
+      logger.debug("--------------------------")
+      logger.debug({month: @ajax_mon})
+      logger.debug({day: @ajax_day})
+      day_week(@today.year.to_i, @ajax_mon.to_i, @ajax_day.to_i)
     else
-      day_week(@today.year, @today.month, @day)
+      logger.debug("--------------------------")
+      logger.debug("no ajax")
+      day_week(@today.year.to_i, @today.month.to_i, @day.to_i)
     end
   end
 
@@ -80,6 +85,7 @@ class ReservationsController < ApplicationController
     ]
     @today = Date.new(year, month, 1)
     @days_date = [*@today.beginning_of_month..@today.end_of_month]
+    @days = [*@today.beginning_of_month.day..@today.end_of_month.day]
     @weekly = []
     @days_date.each do |d|
       @weekly << %w(日 月 火 水 木 金 土)[d.wday]
@@ -99,7 +105,7 @@ class ReservationsController < ApplicationController
     @days = @days_weekly_hash.keys
     if @ajax_mon && @ajax_day
       # 検索する年月日
-      search_date = year.to_s + '-' + mon.to_s + '-' + @ajax_day.to_s
+      search_date = year.to_s + '-' + month.to_s + '-' + day.to_s
       # search_dateを元にその年月日の予約を取り出す
       @reservation = Reservation.select('start_time').where(start_time: search_date.in_time_zone.all_day)
       # 予約済みの時間を取り出す
@@ -113,7 +119,8 @@ class ReservationsController < ApplicationController
       @reservation_time = @reservation_time_default - @reserved_time
       render json: {
         time: @reservation_time,
-        day: @days  
+        days: @days,  
+        day: day
       }
       return @days
     end
