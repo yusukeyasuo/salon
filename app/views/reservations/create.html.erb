@@ -4,7 +4,7 @@
 
 <!-- １月の予約は来年 -->
 <% if @month == "1" %>
-  <% year = Time.new.next_year.to_s %>
+  <% year = Time.new.next_year.year.to_s %>
 <% else %>
   <% year = Time.new.year.to_s %>
 <% end %>
@@ -33,11 +33,19 @@
   </div>
   <div class="row my-3">
     <div class="col-5 text-right"><%= form.label :"メニュー" %></div>
+  <!-- include_hidden: false を入れないと配列を受け取った時先頭に空白が入る -->
+    <div class="col-7">
+      <ul>
+      <%= form.collection_check_boxes :menu, @menu, :details, :details, include_hidden: false do |m| %>
+        <li class="text-left"><%= m.label { m.check_box + m.text } %></li>
+      <% end %>
+      </ul>
+    </div>
   </div>
   <!-- include_hidden: false を入れないと配列を受け取った時先頭に空白が入る -->
-  <%= form.collection_check_boxes :menu, @menu, :details, :details, include_hidden: false do |m| %>
-    <%= m.label { m.check_box + m.text } %>
-  <% end %>
+  <//%= form.collection_check_boxes :menu, @menu, :details, :details, include_hidden: false do |m| %>
+    <//%= m.label { m.check_box + m.text } %>
+  <//% end %>
   <br/>
   <%= form.hidden_field :start_time, value: start_time %>
   <%= form.hidden_field :end_time, value: end_time %>

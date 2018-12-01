@@ -57,17 +57,17 @@
 
       <% if menu.menu == "cut" %>
         <% @cut.each do |cut| %>
-          <p><%= cut.details %> <%= cut.price %></p>
+          <p><%= cut.details %>：<%= cut.price %>円</p>
         <% end %>
 
       <% elsif menu.menu == "perm" %>
         <% @perm.each do |perm| %>
-          <p><%= perm.details %> <%= perm.price %></p>
+          <p><%= perm.details %>：<%= perm.price %>円</p>
         <% end %>
 
       <% elsif menu.menu == "color" %>
         <% @color.each do |color| %>
-          <p><%= color.details %> <%= color.price %></p>
+          <p><%= color.details %>：<%= color.price %>円</p>
         <% end %>
 
       <% end %>

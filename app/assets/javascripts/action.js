@@ -30,31 +30,27 @@ $(function(){
         day: day
       },
       success: function(data){
-        console.log(data.time);
-        //var day_option = "";
-        //for (var i = 0; i < data.day.length; i++){
-        ////  if data.days[i] == data.day{
-        //  //  day_option += '<option value="' + data.days[i] + ' selected">' + data.days[i] + '</option>';
-        // // }else{
-        //    day_option += '<option value="' + data.days[i] + '">' + data.days[i] + '</option>'
-        //  }
-        //}
-        //$(".select_day").html(day_option);
-        var time_option = "";
-        for (var i = 0; i < data.time.length; i++){
-          time_option += '<option value="' + data.time[i] + '">' + data.time[i] + '</option>'
-        }
-        $(".select_time").html(time_option);
         var day_option = "";
-        for (var i = 0; i < data.day.length; i++){
+        for (var i = 0; i < data.days.length; i++){
           if (data.days[i] == data.day){
-            day_option += '<option value="' + data.days[i] + ' selected">' + data.days[i] + '</option>'
+            day_option += '<option value="' + data.days[i] + '" selected>' + data.days[i] + '</option>'
           }else{
             day_option += '<option value="' + data.days[i] + '">' + data.days[i] + '</option>'
           }
         }
         $(".select_day").html(day_option);
-        console.log(day_option);
+        if (data.day != $("#day").val()){
+          var month = $("#month").val();
+          var day = $("#day").val();
+          getTimes(month, day);
+        }else{
+          var time_option = "";
+          for (var i = 0; i < data.time.length; i++){
+            time_option += '<option value="' + data.time[i] + '">' + data.time[i] + '</option>'
+          }
+          $(".select_time").html(time_option);
+          console.log(data.time);
+        }
       },
       error: function(data){
         console.log("error");

@@ -22,13 +22,17 @@ class ReservationsController < ApplicationController
     @ajax_day = params[:day]
 
     if @ajax_mon.present?
-      logger.debug("--------------------------")
+#      logger.debug("--------------------------")
       logger.debug({month: @ajax_mon})
       logger.debug({day: @ajax_day})
-      day_week(@today.year.to_i, @ajax_mon.to_i, @ajax_day.to_i)
+      if @ajax_mon == "1"
+        day_week(@today.next_year.year.to_i, @ajax_mon.to_i, @ajax_day.to_i)
+      else
+        day_week(@today.year.to_i, @ajax_mon.to_i, @ajax_day.to_i)
+      end
     else
-      logger.debug("--------------------------")
-      logger.debug("no ajax")
+      #logger.debug("--------------------------")
+      #logger.debug("no ajax")
       day_week(@today.year.to_i, @today.month.to_i, @day.to_i)
     end
   end
@@ -60,6 +64,8 @@ class ReservationsController < ApplicationController
   end
 
   def day_week(year, month, day)
+      #logger.debug("********************************")
+      #logger.debug({year: year})
     # 予約済み時間
     @reserved_time = []
     # 予約時間
@@ -106,17 +112,29 @@ class ReservationsController < ApplicationController
     if @ajax_mon && @ajax_day
       # 検索する年月日
       search_date = year.to_s + '-' + month.to_s + '-' + day.to_s
+      #logger.debug({search_date: search_date})
       # search_dateを元にその年月日の予約を取り出す
       @reservation = Reservation.select('start_time').where(start_time: search_date.in_time_zone.all_day)
+      #logger.debug({reservation: @reservation})
       # 予約済みの時間を取り出す
       @reservation.each do |r|
-        reserved = r.start_time.hour.to_s + ':' + r.start_time.min.to_s
-        reserved_index = @reservation_time_default.index(reserved)
-        @reserved_time << reserved
-        @reserved_time << @reservation_time_default[reserved_index + 1]
+        if r.start_time.min.to_s == "0"
+          @min = r.start_time.min.to_s + "0"
+          @reserved = r.start_time.hour.to_s + ':' + @min
+        else
+          @reserved = r.start_time.hour.to_s + ':' + r.start_time.min.to_s
+        end
+        #logger.debug("****************************************")
+        #logger.debug({reserved: @reserved})
+        reserved_index = @reservation_time_default.index(@reserved)
+        @reserved_time << @reserved
+        @reserved_time << @reservation_time_default[reserved_index.to_i + 1]
       end
       # 予約済み時間を引く
       @reservation_time = @reservation_time_default - @reserved_time
+      #logger.debug({reserved_time: @reserved_time})
+      #logger.debug({reservation_time: @reservation_time})
+      #logger.debug({reservation_time_default: @reservation_time_default})
       render json: {
         time: @reservation_time,
         days: @days,  
